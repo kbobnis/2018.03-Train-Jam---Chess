@@ -74,12 +74,12 @@ public class Piece : MonoBehaviour {
 		}
 	}
 
-	public bool CanMoveTo(Vector2Int tilePos) {
-		return movement.CanMoveTo(facePos.Transform(tilePos - pos));
+	public bool CanMoveTo(Vector2Int tilePos, List<Vector2Int> obstacles) {
+		return movement.CanMoveTo(tilePos - pos, facePos, obstacles);
 	}
 
-	public bool CanAttack(Vector2Int tilePos) {
-		return movement.CanAttack(facePos.Transform(tilePos - pos));
+	public bool CanAttack(Vector2Int tilePos, List<Vector2Int> obstacles) {
+		return movement.CanAttack(tilePos - pos, facePos, obstacles);
 	}
 }
 

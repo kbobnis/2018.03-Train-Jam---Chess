@@ -26,8 +26,9 @@ public class GameType {
 	public PieceMovement GetMovesFor(PieceModel model) {
 		switch (model) {
 			case PieceModel.Pawn: return new PieceMovement.Pawn();
-			default:
 			case PieceModel.Knight: return new PieceMovement.Knight();
+				default:
+			case PieceModel.Bishop: return new PieceMovement.Bishop();
 		}
 	}
 }

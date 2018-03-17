@@ -56,4 +56,14 @@ public class Pieces : MonoBehaviour {
 	public void RemoveFromPieces(Piece toRemove) {
 		pieces.Remove(toRemove);
 	}
+
+	public List<Vector2Int> RelativePositionsOfPieces(Piece pieceArg) {
+		List<Vector2Int> relativePos = new List<Vector2Int>();
+		foreach (Piece piece in pieces) {
+			if (piece != pieceArg) {
+				relativePos.Add(piece.pos - pieceArg.pos);
+			}
+		}
+		return relativePos;
+	}
 }

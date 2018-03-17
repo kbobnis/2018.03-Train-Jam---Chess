@@ -113,9 +113,10 @@ public class Chess : MonoBehaviour {
 
 	private List<Tile> GetPossibleAttacks(Piece piece) {
 		List<Tile> whereToMove = new List<Tile>();
+		List<Vector2Int> obstacles = pieces.RelativePositionsOfPieces(piece);
 		//attacks (the same, but for pawn)
 		foreach (Tile tile in board.tiles) {
-			bool isAttackThere = piece.CanAttack(tile.pos);
+			bool isAttackThere = piece.CanAttack(tile.pos, obstacles);
 			Piece pieceOnTile = pieces.GetPieceOn(tile.pos);
 			if (isAttackThere && (pieceOnTile != null && IsOpponent(pieceOnTile.owner))) {
 				whereToMove.Add(tile);
@@ -130,8 +131,9 @@ public class Chess : MonoBehaviour {
 			return whereToMove;
 		}
 
+		List<Vector2Int> obstacles = pieces.RelativePositionsOfPieces(piece);
 		foreach (Tile tile in board.tiles) {
-			bool isMovementThere = piece.CanMoveTo(tile.pos);
+			bool isMovementThere = piece.CanMoveTo(tile.pos, obstacles);
 			Piece pieceOnTile = pieces.GetPieceOn(tile.pos);
 			if (isMovementThere && pieceOnTile == null) {
 				whereToMove.Add(tile);
