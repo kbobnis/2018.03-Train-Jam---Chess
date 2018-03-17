@@ -1,26 +1,113 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Chess : MonoBehaviour {
-
 	[SerializeField] private Board board;
-
 	[SerializeField] private Pieces pieces;
-	
-	// Use this for initialization
-	void Start () {
-		SpawnGame();
+	[SerializeField] private Material[] playerPiecesMaterials;
+
+	private List<Player> players;
+	private Player actualPlayer;
+
+	private GameType gameType;
+
+	void Start() {
+		gameType = GameType.Chess;
+		players = gameType.CreatePlayers(playerPiecesMaterials);
+
+		SpawnGame(gameType, players);
+		StartGame(gameType);
 	}
 
-	private void SpawnGame() {
-		board.SpawnBoard(8, 8);
-
-		pieces.SpawnPieces(StartingPos.Chess);
+	private void StartGame(GameType chess) {
+		actualPlayer = players[0];
+		StartTurn(actualPlayer);
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
+	private void StartTurn(Player player) {
+		foreach (Piece piece in pieces.pieces) {
+			piece.ToggleSelectable(piece.owner == player);
+		}
+	}
+
+	private void SpawnGame(GameType game, List<Player> players) {
+		List<Tile> tiles = board.SpawnBoard(game.w, game.h);
+
+		foreach (Tile tile in tiles) {
+			tile.OnSelected += OnTileSelected;
+		}
+
+		List<Piece> allPieces = pieces.SpawnPieces(game, players);
+
+		foreach (Piece piece in allPieces) {
+			piece.OnSelected += OnPieceSelected;
+			piece.OnFinishedMove += OnPiecenFinishedMove;
+		}
+	}
+
+	private void OnPiecenFinishedMove(Piece piece) {
+		DeselectAll();
+	}
+
+	private void DeselectAll() {
+		foreach (Piece piece in pieces.pieces) {
+			piece.ToggleSelect(false);
+		}
+		foreach (Tile tile in board.tiles) {
+			tile.ToggleSelect(false);
+		}
+	}
+
+	private void OnTileSelected(Tile tile) {
+		Piece pieceOn = pieces.GetPieceOn(tile.pos);
+		if (pieceOn != null && pieceOn.owner == actualPlayer) {
+			OnPieceSelected(pieceOn);
+		}
+		else {
+			Piece piece = pieces.GetSelectedPiece();
+			List<Tile> possibleTilesToMove = GetPossibleMovements(piece);
+			if (possibleTilesToMove.Contains(tile)) {
+				piece.MoveTo(tile);
+			}
+			else {
+				DeselectAll();
+			}
+		}
+	}
+
+	private void OnPieceSelected(Piece piece) {
+		if (piece.owner == actualPlayer) {
+			DeselectAll();
+			piece.ToggleSelect(true);
+			List<Tile> tiles = GetPossibleMovements(piece);
+			foreach (Tile tile in tiles) {
+				tile.ShowPossibleMovement(true);
+				Piece pieceOn = pieces.GetPieceOn(tile.pos);
+				if (pieceOn != null && IsOpponent(pieceOn.owner)) {
+					pieceOn.IsInDanger();
+				}
+			}
+		}
+		else {
+			Debug.LogFormat("This piece {0} is opponents.", piece.name);
+		}
+	}
+
+	private bool IsOpponent(Player playerToCheck) {
+		return actualPlayer != playerToCheck;
+	}
+
+	private List<Tile> GetPossibleMovements(Piece piece) {
+		List<Tile> whereToMove = new List<Tile>();
+		foreach (Tile tile in board.tiles) {
+			bool isMovementThere = piece.movement.CanMoveTo(tile.pos - piece.pos);
+			Piece pieceOnTile = pieces.GetPieceOn(tile.pos);
+			bool isOwnPieceThere = pieceOnTile != null && pieceOnTile.owner == piece.owner;
+			if (isMovementThere && !isOwnPieceThere) {
+				whereToMove.Add(tile);
+			}
+		}
+		return whereToMove;
 	}
 }

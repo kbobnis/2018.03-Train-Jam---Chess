@@ -22,10 +22,21 @@
         <e p="Scripts" t="Include">
           <e p="Board.cs" t="Include" />
           <e p="Chess.cs" t="Include" />
+          <e p="GameBehaviour.cs" t="Include" />
+          <e p="GameType.cs" t="Include" />
+          <e p="Generic" t="Include">
+            <e p="Mover2d.cs" t="Include" />
+            <e p="Mover3d.cs" t="Include" />
+            <e p="Percent.cs" t="Include" />
+          </e>
           <e p="Piece.cs" t="Include" />
+          <e p="PieceModel.cs" t="Include" />
+          <e p="PieceMovement.cs" t="Include" />
           <e p="PiecePosition.cs" t="Include" />
           <e p="Pieces.cs" t="Include" />
+          <e p="Player.cs" t="Include" />
           <e p="SimpleCameraController.cs" t="Include" />
+          <e p="StartingPos.cs" t="Include" />
           <e p="Tile.cs" t="Include" />
         </e>
         <e p="Standard Assets" t="Include">

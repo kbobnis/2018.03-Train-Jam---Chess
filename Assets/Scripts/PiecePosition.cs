@@ -1,12 +1,13 @@
-﻿
-public struct PiecePosition {
-    public PieceType type;
-    public Position position;
-    public int rotation;
+﻿using UnityEngine;
 
-    public PiecePosition(PieceType type, Position position, int rotation) {
-        this.type = type;
-        this.position = position;
-        this.rotation = rotation;
-    }
+public struct PiecePosition {
+	public PieceModel model;
+	public Vector2Int pos;
+	public int rotation;
+
+	public PiecePosition(PieceModel model, Vector2Int pos, int rotation) {
+		this.model = model;
+		this.pos = pos;
+		this.rotation = rotation;
+	}
 }
