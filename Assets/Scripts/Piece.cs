@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Piece : MonoBehaviour {
-	
 	[SerializeField] private PieceTypeAndMesh[] meshes;
 	[SerializeField] private Material selected, isInDanger;
 
@@ -12,13 +11,14 @@ public class Piece : MonoBehaviour {
 	public PieceModel model { get; private set; }
 	public Vector2Int pos;
 	public PieceMovement movement;
-	public int rotation;
+
+	private Side facePos; 
 
 	public Player owner;
 	public bool isSelected { get; private set; }
 
 	public void Init(PiecePosition piecePos, Player player, PieceMovement movement) {
-		this.rotation = piecePos.rotation;
+		facePos = piecePos.facePos;
 		SetType(piecePos.model);
 		gameObject.GetComponent<MeshRenderer>().sharedMaterial = player.piecesMaterial;
 		this.owner = player;
@@ -27,7 +27,7 @@ public class Piece : MonoBehaviour {
 		this.movement = movement;
 		GetComponent<ParticleSystem>().Pause();
 	}
-	
+
 	private void SetType(PieceModel model) {
 		this.model = model;
 		Mesh foundMesh = null;
@@ -45,7 +45,7 @@ public class Piece : MonoBehaviour {
 			OnSelected(this);
 		}
 	}
-	
+
 	public void IsInDanger() {
 		GetComponent<MeshRenderer>().sharedMaterial = isInDanger;
 	}
@@ -55,23 +55,31 @@ public class Piece : MonoBehaviour {
 		GetComponent<MeshRenderer>().sharedMaterial = isSelected ? selected : owner.piecesMaterial;
 	}
 
-	public void MoveTo(Tile tile) {
-		gameObject.AddComponent<Mover3d>().MoveTo(transform, new Vector3(-tile.pos.x, 0, tile.pos.y), () => {
-			pos.x = tile.pos.x;
-			pos.y = tile.pos.y;
+	public void MoveTo(Vector2Int pos, Action afterAction) {
+		gameObject.AddComponent<Mover3d>().MoveTo(transform, new Vector3(-pos.x, 0, pos.y), () => {
+			afterAction();
+			this.pos.x = pos.x;
+			this.pos.y = pos.y;
 			if (OnFinishedMove != null) {
 				OnFinishedMove(this);
 			}
-		}, Percent.One );
+		}, Percent.One);
 	}
 
 	public void ToggleSelectable(bool b) {
 		if (b) {
 			GetComponent<ParticleSystem>().Play();
-		}
-		else {
+		} else {
 			GetComponent<ParticleSystem>().Stop();
 		}
+	}
+
+	public bool CanMoveTo(Vector2Int tilePos) {
+		return movement.CanMoveTo(facePos.Transform(tilePos - pos));
+	}
+
+	public bool CanAttack(Vector2Int tilePos) {
+		return movement.CanAttack(facePos.Transform(tilePos - pos));
 	}
 }
 

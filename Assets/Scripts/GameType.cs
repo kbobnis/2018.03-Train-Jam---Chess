@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GameType {
@@ -14,13 +13,14 @@ public class GameType {
 		this.startingPos = startingPos;
 	}
 
+	/// <summary>
+	/// right now we create two players. one up and one down
+	/// </summary>
 	public List<Player> CreatePlayers(Material[] pieceMaterials) {
-		int actualIndex = 0;
-		List<Player> players = new List<Player>();
-		foreach (List<PiecePosition> piecePositions in startingPos.startingPos) {
-			players.Add(new Player(pieceMaterials[actualIndex++]));
-		}
-		return players;
+		return new List<Player>() {
+			new Player(pieceMaterials[0], Side.Up),
+			new Player(pieceMaterials[1], Side.Down),
+		};
 	}
 
 	public PieceMovement GetMovesFor(PieceModel model) {

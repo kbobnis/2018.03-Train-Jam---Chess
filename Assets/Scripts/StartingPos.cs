@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Experimental.U2D;
 
 /// <summary>
 /// 8x8 chess board
@@ -16,42 +19,42 @@ using UnityEngine;
 public class StartingPos {
 	public static readonly StartingPos Chess = new StartingPos(new List<List<PiecePosition>>() {
 		new List<PiecePosition>() {
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(0, 6), 0),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(1, 6), 0),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(2, 6), 0),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(3, 6), 0),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(4, 6), 0),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(5, 6), 0),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(6, 6), 0),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(7, 6), 0),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(0, 6), Side.Up),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(1, 6), Side.Up),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(2, 6), Side.Up),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(3, 6), Side.Up),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(4, 6), Side.Up),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(5, 6), Side.Up),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(6, 6), Side.Up),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(7, 6), Side.Up),
 				
-			new PiecePosition(PieceModel.Rook, new Vector2Int(0, 7), 0),
-			new PiecePosition(PieceModel.Knight, new Vector2Int(1, 7), 0),
-			new PiecePosition(PieceModel.Bishop, new Vector2Int(2, 7), 0),
-			new PiecePosition(PieceModel.Queen, new Vector2Int(3, 7), 0),
-			new PiecePosition(PieceModel.King, new Vector2Int(4, 7), 0),
-			new PiecePosition(PieceModel.Bishop, new Vector2Int(5, 7), 0),
-			new PiecePosition(PieceModel.Knight, new Vector2Int(6, 7), 0),
-			new PiecePosition(PieceModel.Rook, new Vector2Int(7, 7), 0),
+			new PiecePosition(PieceModel.Rook, new Vector2Int(0, 7), Side.Up),
+			new PiecePosition(PieceModel.Knight, new Vector2Int(1, 7), Side.Up),
+			new PiecePosition(PieceModel.Bishop, new Vector2Int(2, 7), Side.Up),
+			new PiecePosition(PieceModel.Queen, new Vector2Int(3, 7), Side.Up),
+			new PiecePosition(PieceModel.King, new Vector2Int(4, 7), Side.Up),
+			new PiecePosition(PieceModel.Bishop, new Vector2Int(5, 7), Side.Up),
+			new PiecePosition(PieceModel.Knight, new Vector2Int(6, 7), Side.Up),
+			new PiecePosition(PieceModel.Rook, new Vector2Int(7, 7), Side.Up),
 		},
 		new List<PiecePosition>() {
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(0, 1), 180),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(1, 1), 180),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(2, 1), 180),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(3, 1), 180),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(4, 1), 180),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(5, 1), 180),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(6, 1), 180),
-			new PiecePosition(PieceModel.Pawn, new Vector2Int(7, 1), 180),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(0, 1), Side.Down),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(1, 1), Side.Down),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(2, 1), Side.Down),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(3, 1), Side.Down),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(4, 1), Side.Down),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(5, 1), Side.Down),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(6, 1), Side.Down),
+			new PiecePosition(PieceModel.Pawn, new Vector2Int(7, 1), Side.Down),
 				
-			new PiecePosition(PieceModel.Rook, new Vector2Int(0, 0), 180),
-			new PiecePosition(PieceModel.Knight, new Vector2Int(1, 0), 180),
-			new PiecePosition(PieceModel.Bishop, new Vector2Int(2, 0), 180),
-			new PiecePosition(PieceModel.Queen, new Vector2Int(3, 0), 180),
-			new PiecePosition(PieceModel.King, new Vector2Int(4, 0), 180),
-			new PiecePosition(PieceModel.Bishop, new Vector2Int(5, 0), 180),
-			new PiecePosition(PieceModel.Knight, new Vector2Int(6, 0), 180),
-			new PiecePosition(PieceModel.Rook, new Vector2Int(7, 0), 180),
+			new PiecePosition(PieceModel.Rook, new Vector2Int(0, 0), Side.Down),
+			new PiecePosition(PieceModel.Knight, new Vector2Int(1, 0), Side.Down),
+			new PiecePosition(PieceModel.Bishop, new Vector2Int(2, 0), Side.Down),
+			new PiecePosition(PieceModel.Queen, new Vector2Int(3, 0), Side.Down),
+			new PiecePosition(PieceModel.King, new Vector2Int(4, 0), Side.Down),
+			new PiecePosition(PieceModel.Bishop, new Vector2Int(5, 0), Side.Down),
+			new PiecePosition(PieceModel.Knight, new Vector2Int(6, 0), Side.Down),
+			new PiecePosition(PieceModel.Rook, new Vector2Int(7, 0), Side.Down),
 		}
 	});
 
@@ -59,5 +62,30 @@ public class StartingPos {
 
 	private StartingPos(List<List<PiecePosition>> dict) {
 		startingPos = dict;
+	}
+}
+
+public class Side {
+	public static readonly Side Up = new Side(0);
+	public static readonly Side Down = new Side(180);
+
+	public readonly int angle;
+	
+	private Side(int angle) {
+		this.angle = angle;
+	}
+
+	public float ToAngle() {
+		return angle;
+	}
+
+	public Vector2Int Transform(Vector2Int pos) {
+		if (angle != 180 && angle != 0) {
+			throw new NotImplementedException();
+		}
+		if (angle == 180) {
+			return  pos * -1;
+		}
+		return pos;
 	}
 }

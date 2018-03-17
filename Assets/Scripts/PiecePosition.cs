@@ -3,11 +3,11 @@
 public struct PiecePosition {
 	public PieceModel model;
 	public Vector2Int pos;
-	public int rotation;
+	public Side facePos;
 
-	public PiecePosition(PieceModel model, Vector2Int pos, int rotation) {
+	public PiecePosition(PieceModel model, Vector2Int pos, Side facePos) {
 		this.model = model;
 		this.pos = pos;
-		this.rotation = rotation;
+		this.facePos = facePos;
 	}
 }
