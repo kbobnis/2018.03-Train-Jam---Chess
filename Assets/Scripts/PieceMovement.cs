@@ -10,8 +10,8 @@ public abstract class PieceMovement {
 	}
 
 	private static bool RookMove(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
-		bool isOnLine = Math.Abs(pos.x) == 0 || Math.Abs(pos.y) == 0;
-		if (isOnLine) {
+		bool isinLine = Math.Abs(pos.x) == 0 || Math.Abs(pos.y) == 0;
+		if (isinLine) {
 			int signX = Math.Sign(pos.x);
 			int signY = Math.Sign(pos.y);
 			for (int i = 1; i < Math.Max(Math.Abs(pos.x), Math.Abs(pos.y)); i++) {
@@ -57,7 +57,6 @@ public abstract class PieceMovement {
 			}
 			return false;
 		}
-
 	}
 
 	public class Pawn : PieceMovement {
@@ -90,7 +89,13 @@ public abstract class PieceMovement {
 
 	public class King : PieceMovement {
 		public override bool CanMoveTo(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles, bool neverMoved) {
-			return Math.Abs(pos.x) <= 1 && Math.Abs(pos.y) <= 1;
+			bool canMoveRegular = Math.Abs(pos.x) <= 1 && Math.Abs(pos.y) <= 1;
+			//TODO: check for the castling situation
+			//- king and rook have to be in their original position 
+			//- there has to be nothing in between them
+			//- there has to be no dangerous field between them or on them
+			
+			return canMoveRegular;
 		}
 	}
 

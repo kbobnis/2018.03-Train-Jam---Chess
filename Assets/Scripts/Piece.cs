@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Piece : MonoBehaviour {
+public class Piece : GameElement {
 	[SerializeField] private EnumToModel[] enumsToModels;
 	[SerializeField] private Material selected, isInDanger;
 
 	public event Action<Piece> OnSelected;
 	public event Action<Piece> OnFinishedMove;
-	private PieceModelEnum ModelEnum;
+	public PieceModelEnum modelEnum;
 	private GameObject model;
-	public Vector2Int pos;
+
 	public PieceMovement movement;
 
 	private Side facePos;
@@ -20,6 +20,8 @@ public class Piece : MonoBehaviour {
 	public bool isSelected { get; private set; }
 
 	public void Init(PiecePosition piecePos, Player player, PieceMovement movement) {
+		gameObject.SetActive(true);
+		transform.rotation = Quaternion.AngleAxis(piecePos.facePos.ToAngle(), new Vector3(0, 1, 0));
 		facePos = piecePos.facePos;
 		SetType(piecePos.ModelEnum);
 		this.owner = player;
@@ -31,7 +33,7 @@ public class Piece : MonoBehaviour {
 	}
 
 	private void SetType(PieceModelEnum modelEnum) {
-		this.ModelEnum = modelEnum;
+		this.modelEnum = modelEnum;
 		GameObject prefab = null;
 		
 		foreach (EnumToModel enumsToModel in enumsToModels) {
@@ -65,8 +67,6 @@ public class Piece : MonoBehaviour {
 		gameObject.AddComponent<Mover3d>().MoveTo(transform, new Vector3(-pos.x, 0, pos.y), () => {
 			afterAction();
 			neverMoved = false;
-			this.pos.x = pos.x;
-			this.pos.y = pos.y;
 			if (OnFinishedMove != null) {
 				OnFinishedMove(this);
 			}

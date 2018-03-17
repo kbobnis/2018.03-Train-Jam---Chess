@@ -28,9 +28,6 @@ public class Pieces : MonoBehaviour {
 
 	private Piece SpawnPiece(PiecePosition piecePos, Player owner, PieceMovement movement) {
 		Piece piece = Instantiate(piecePrefab, this.transform);
-		piece.gameObject.SetActive(true);
-		piece.transform.position = new Vector3(-piecePos.pos.x, piecePrefab.transform.position.y, piecePos.pos.y);
-		piece.transform.rotation = Quaternion.AngleAxis(piecePos.facePos.ToAngle(), new Vector3(0, 1, 0));
 		piece.Init(piecePos, owner, movement);
 		return piece;
 	}

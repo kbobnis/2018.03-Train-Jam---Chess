@@ -2,27 +2,28 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class Tile : MonoBehaviour {
+public class Tile : GameElement {
 
 	[SerializeField] private Material white, black, selected, canMove;
 
 	public event Action<Tile> OnSelected;
 	
-	public Vector2Int pos;
-
 	private bool isWhite;
 
-	public void Init(bool isWhite, Vector2Int pos) {
+	public Tile Init(Vector2Int pos) {
+		gameObject.SetActive(true);
+		name = string.Format("Tile {0}, {1}", pos.x, pos.y);
 		this.pos = pos;
-		this.isWhite = isWhite;
-		ToggleSelect(false);
+		this.isWhite = (pos.x + pos.y) % 2 == 0 ;
+		RestoreMaterial();
+		return this;
 	}
 
 	public void ShowPossibleMovement(bool canMoveTo) {
 		if (canMoveTo) {
 			GetComponent<MeshRenderer>().sharedMaterial = canMove;
 		} else {
-			ToggleSelect(false);
+			RestoreMaterial();
 		}
 	}
 	
@@ -32,7 +33,7 @@ public class Tile : MonoBehaviour {
 		}
 	}
 
-	public void ToggleSelect(bool b) {
+	public void RestoreMaterial() {
 		GetComponent<MeshRenderer>().sharedMaterial = isWhite ? white : black;
 	}
 }

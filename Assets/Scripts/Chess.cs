@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Chess : MonoBehaviour {
 	[SerializeField] private Board board;
@@ -8,6 +9,7 @@ public class Chess : MonoBehaviour {
 
 	private List<Player> players;
 	private Player actualPlayer;
+	private Player otherPlayer { get { return players[(players.IndexOf(actualPlayer) + 1) % players.Count]; }}
 
 	private GameType gameType;
 
@@ -46,9 +48,8 @@ public class Chess : MonoBehaviour {
 	}
 
 	private void OnPiecenFinishedMove(Piece piece) {
-		//if moved onto another one, then removing that another one
 		DeselectAll();
-		StartTurn(players[(players.IndexOf(actualPlayer) + 1) % players.Count]);
+		StartTurn(otherPlayer);
 	}
 
 	private void DeselectAll() {
@@ -56,7 +57,7 @@ public class Chess : MonoBehaviour {
 			piece.ToggleSelect(false);
 		}
 		foreach (Tile tile in board.tiles) {
-			tile.ToggleSelect(false);
+			tile.RestoreMaterial();
 		}
 	}
 
@@ -97,6 +98,9 @@ public class Chess : MonoBehaviour {
 						selected.MoveTo(tileToAttack.pos, () => {
 							pieces.RemoveFromPieces(pieceToAttack);
 							actualPlayer.AddToGraveyard(pieceToAttack);
+							if (piece.modelEnum == PieceModelEnum.King) {
+								EndGame(otherPlayer);
+							}
 						});
 						return;
 					}
@@ -104,6 +108,10 @@ public class Chess : MonoBehaviour {
 			}
 			DeselectAll();
 		}
+	}
+
+	private void EndGame(Player winner) {
+		SceneManager.LoadScene("SampleScene");
 	}
 
 	private bool IsOpponent(Player playerToCheck) {

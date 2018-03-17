@@ -27,6 +27,7 @@
           <e p="Board.cs" t="Include" />
           <e p="Chess.cs" t="Include" />
           <e p="GameBehaviour.cs" t="Include" />
+          <e p="GameElement.cs" t="Include" />
           <e p="GameType.cs" t="Include" />
           <e p="Generic" t="Include">
             <e p="Mover2d.cs" t="Include" />

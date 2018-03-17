@@ -55,6 +55,7 @@
     <Compile Include="Assets\Scripts\Board.cs" />
     <Compile Include="Assets\Scripts\Chess.cs" />
     <Compile Include="Assets\Scripts\GameBehaviour.cs" />
+    <Compile Include="Assets\Scripts\GameElement.cs" />
     <Compile Include="Assets\Scripts\GameType.cs" />
     <Compile Include="Assets\Scripts\Generic\Mover2d.cs" />
     <Compile Include="Assets\Scripts\Generic\Mover3d.cs" />
