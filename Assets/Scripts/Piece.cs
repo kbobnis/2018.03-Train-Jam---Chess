@@ -26,7 +26,8 @@ public class Piece : MonoBehaviour {
 		gameObject.name = string.Format("{0} on {1},{2}", piecePos.ModelEnum, piecePos.pos.x, piecePos.pos.y);
 		pos = piecePos.pos;
 		this.movement = movement;
-		GetComponent<ParticleSystem>().Pause();
+		ToggleSelect(false);
+		GetComponent<Rotater>().enabled = false;
 	}
 
 	private void SetType(PieceModelEnum modelEnum) {
@@ -73,11 +74,7 @@ public class Piece : MonoBehaviour {
 	}
 
 	public void ToggleSelectable(bool b) {
-		if (b) {
-			GetComponent<ParticleSystem>().Play();
-		} else {
-			GetComponent<ParticleSystem>().Stop();
-		}
+		GetComponent<Rotater>().enabled = b;
 	}
 
 	public bool CanMoveTo(Vector2Int tilePos, List<Vector2Int> obstacles) {
