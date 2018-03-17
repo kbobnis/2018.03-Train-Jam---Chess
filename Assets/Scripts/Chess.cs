@@ -21,11 +21,11 @@ public class Chess : MonoBehaviour {
 	}
 
 	private void StartGame(GameType chess) {
-		actualPlayer = players[0];
-		StartTurn(actualPlayer);
+		StartTurn(players[0]);
 	}
 
 	private void StartTurn(Player player) {
+		actualPlayer = player;
 		foreach (Piece piece in pieces.pieces) {
 			piece.ToggleSelectable(piece.owner == player);
 		}
@@ -48,6 +48,7 @@ public class Chess : MonoBehaviour {
 
 	private void OnPiecenFinishedMove(Piece piece) {
 		DeselectAll();
+		StartTurn(players[(players.IndexOf(actualPlayer) + 1) % players.Count]);
 	}
 
 	private void DeselectAll() {
@@ -99,12 +100,33 @@ public class Chess : MonoBehaviour {
 	}
 
 	private List<Tile> GetPossibleMovements(Piece piece) {
+		 
 		List<Tile> whereToMove = new List<Tile>();
+		if (piece == null) {
+			return whereToMove;
+		}
+		
+		//movements
 		foreach (Tile tile in board.tiles) {
-			bool isMovementThere = piece.movement.CanMoveTo(tile.pos - piece.pos);
+			Vector2Int moveToCheck = tile.pos - piece.pos;
+			if (piece.rotation == 180) {
+				moveToCheck *= -1;
+			}
+			bool isMovementThere = piece.movement.CanMoveTo(moveToCheck);
 			Piece pieceOnTile = pieces.GetPieceOn(tile.pos);
-			bool isOwnPieceThere = pieceOnTile != null && pieceOnTile.owner == piece.owner;
-			if (isMovementThere && !isOwnPieceThere) {
+			if (isMovementThere && pieceOnTile == null) {
+				whereToMove.Add(tile);
+			}
+		}
+		//attacks (the same, but for pawn)
+		foreach (Tile tile in board.tiles) {
+			Vector2Int moveToCheck = tile.pos - piece.pos;
+			if (piece.rotation == 180) {
+				moveToCheck *= -1;
+			}
+			bool isAttackThere = piece.movement.CanAttack(moveToCheck);
+			Piece pieceOnTile = pieces.GetPieceOn(tile.pos);
+			if (isAttackThere && (pieceOnTile != null && IsOpponent(pieceOnTile.owner))) {
 				whereToMove.Add(tile);
 			}
 		}

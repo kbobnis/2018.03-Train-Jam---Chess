@@ -70,7 +70,7 @@ public class Piece : MonoBehaviour {
 			GetComponent<ParticleSystem>().Play();
 		}
 		else {
-			GetComponent<ParticleSystem>().Pause();
+			GetComponent<ParticleSystem>().Stop();
 		}
 	}
 }

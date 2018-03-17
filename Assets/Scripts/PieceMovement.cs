@@ -3,6 +3,7 @@
 public abstract class PieceMovement {
 
 	public abstract bool CanMoveTo(Vector2Int pos);
+	public abstract bool CanAttack(Vector2Int pos);
 
 	public class Knight : PieceMovement {
 
@@ -12,7 +13,7 @@ public abstract class PieceMovement {
 			new Vector2Int(-1, 2), new Vector2Int(1, 2),
 			new Vector2Int(-2, -1), new Vector2Int(-2, 1),
 		};
-
+		
 		public override bool CanMoveTo(Vector2Int pos) {
 			foreach (Vector2Int move in moves) {
 				if (pos.x == move.x && pos.y == move.y) {
@@ -21,11 +22,19 @@ public abstract class PieceMovement {
 			}
 			return false;
 		}
+
+		public override bool CanAttack(Vector2Int pos) {
+			return CanMoveTo(pos);
+		}
 	}
 
 	public class Pawn : PieceMovement {
 		public override bool CanMoveTo(Vector2Int pos) {
 			return pos.x == 0 && pos.y == -1;
+		}
+
+		public override bool CanAttack(Vector2Int pos) {
+			return (pos.x == -1 || pos.x == 1) && pos.y == -1;
 		}
 	}
 }
