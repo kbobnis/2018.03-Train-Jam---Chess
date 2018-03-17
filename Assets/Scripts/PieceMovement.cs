@@ -1,11 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public abstract class PieceMovement {
 	public abstract bool CanMoveTo(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles);
-	public abstract bool CanAttack(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles);
+
+	public virtual bool CanAttack(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
+		return CanMoveTo(pos, wheresFace, obstacles);
+	}
+
+	private static bool RookMove(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
+		bool isOnLine = Math.Abs(pos.x) == 0 || Math.Abs(pos.y) == 0;
+		if (isOnLine) {
+			int signX = Math.Sign(pos.x);
+			int signY = Math.Sign(pos.y);
+			for (int i = 1; i < Math.Max(Math.Abs(pos.x), Math.Abs(pos.y)); i++) {
+				Vector2Int checkPos = new Vector2Int(i * signX, i * signY);
+				if (obstacles.Contains(checkPos)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	private static bool BishopMove(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
+		bool isOnLine = Math.Abs(pos.x) == Math.Abs(pos.y);
+		if (isOnLine) {
+			int signX = Math.Sign(pos.x);
+			int signY = Math.Sign(pos.y);
+			for (int x = 1; x < Math.Abs(pos.x); x++) {
+				Vector2Int checkPos = new Vector2Int(x * signX, x * signY);
+				if (obstacles.Contains(checkPos)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 
 	public class Knight : PieceMovement {
 		private readonly Vector2Int[] moves = {
@@ -24,9 +58,6 @@ public abstract class PieceMovement {
 			return false;
 		}
 
-		public override bool CanAttack(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
-			return CanMoveTo(pos, wheresFace, obstacles);
-		}
 	}
 
 	public class Pawn : PieceMovement {
@@ -53,23 +84,7 @@ public abstract class PieceMovement {
 
 	public class Bishop : PieceMovement {
 		public override bool CanMoveTo(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
-			bool isOnLine = Math.Abs(pos.x) == Math.Abs(pos.y);
-			if (isOnLine) {
-				int signX = Math.Sign(pos.x);
-				int signY = Math.Sign(pos.y);
-				for (int x = 1; x < Math.Abs(pos.x); x++) {
-					Vector2Int checkPos = new Vector2Int(x * signX, x * signY);
-					if (obstacles.Contains(checkPos)) {
-						return false;
-					}
-				}
-				return true;
-			}
-			return false;
-		}
-
-		public override bool CanAttack(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
-			return CanMoveTo(pos, wheresFace, obstacles);
+			return BishopMove(pos, wheresFace, obstacles);
 		}
 	}
 
@@ -77,9 +92,21 @@ public abstract class PieceMovement {
 		public override bool CanMoveTo(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
 			return Math.Abs(pos.x) <= 1 && Math.Abs(pos.y) <= 1;
 		}
+	}
 
-		public override bool CanAttack(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
-			return CanMoveTo(pos, wheresFace, obstacles);
+	public class Queen : PieceMovement {
+		public override bool CanMoveTo(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
+			bool rookMove = RookMove(pos, wheresFace, obstacles);
+			bool bishopMove = BishopMove(pos, wheresFace, obstacles);
+			return rookMove || bishopMove;
 		}
+
+	}
+
+	public class Rook : PieceMovement {
+		public override bool CanMoveTo(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
+			return RookMove(pos, wheresFace, obstacles);
+		}
+
 	}
 }

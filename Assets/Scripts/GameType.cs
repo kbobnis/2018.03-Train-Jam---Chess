@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameType {
@@ -28,8 +29,11 @@ public class GameType {
 			case PieceModel.Pawn: return new PieceMovement.Pawn();
 			case PieceModel.Knight: return new PieceMovement.Knight();
 			case PieceModel.King: return new PieceMovement.King();
-				default:
 			case PieceModel.Bishop: return new PieceMovement.Bishop();
+			case PieceModel.Queen: return new PieceMovement.Queen();
+			case PieceModel.Rook: return new PieceMovement.Rook();
+			default:
+				throw new NotImplementedException();
 		}
 	}
 }
