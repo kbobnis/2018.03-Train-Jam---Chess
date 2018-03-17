@@ -24,14 +24,14 @@ public class GameType {
 		};
 	}
 
-	public PieceMovement GetMovesFor(PieceModel model) {
-		switch (model) {
-			case PieceModel.Pawn: return new PieceMovement.Pawn();
-			case PieceModel.Knight: return new PieceMovement.Knight();
-			case PieceModel.King: return new PieceMovement.King();
-			case PieceModel.Bishop: return new PieceMovement.Bishop();
-			case PieceModel.Queen: return new PieceMovement.Queen();
-			case PieceModel.Rook: return new PieceMovement.Rook();
+	public PieceMovement GetMovesFor(PieceModelEnum modelEnum) {
+		switch (modelEnum) {
+			case PieceModelEnum.Pawn: return new PieceMovement.Pawn();
+			case PieceModelEnum.Knight: return new PieceMovement.Knight();
+			case PieceModelEnum.King: return new PieceMovement.King();
+			case PieceModelEnum.Bishop: return new PieceMovement.Bishop();
+			case PieceModelEnum.Queen: return new PieceMovement.Queen();
+			case PieceModelEnum.Rook: return new PieceMovement.Rook();
 			default:
 				throw new NotImplementedException();
 		}

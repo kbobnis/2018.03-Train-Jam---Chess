@@ -60,7 +60,7 @@
     <Compile Include="Assets\Scripts\Generic\Mover3d.cs" />
     <Compile Include="Assets\Scripts\Generic\Percent.cs" />
     <Compile Include="Assets\Scripts\Piece.cs" />
-    <Compile Include="Assets\Scripts\PieceModel.cs" />
+    <Compile Include="Assets\Scripts\PieceModelEnum.cs" />
     <Compile Include="Assets\Scripts\PieceMovement.cs" />
     <Compile Include="Assets\Scripts\PiecePosition.cs" />
     <Compile Include="Assets\Scripts\Pieces.cs" />

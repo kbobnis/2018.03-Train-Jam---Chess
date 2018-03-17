@@ -19,7 +19,7 @@ public class Pieces : MonoBehaviour {
 		foreach (List<PiecePosition> piecePositions in game.startingPos.startingPos) {
 			Player actualPlayer = players[actualPlayerIndex++];
 			foreach (PiecePosition piecePos in piecePositions) {
-				Piece piece = SpawnPiece(piecePos, actualPlayer, game.GetMovesFor(piecePos.model));
+				Piece piece = SpawnPiece(piecePos, actualPlayer, game.GetMovesFor(piecePos.ModelEnum));
 				pieces.Add(piece);
 			}
 		}

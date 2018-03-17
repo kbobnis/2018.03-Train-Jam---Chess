@@ -30,7 +30,7 @@
             <e p="Percent.cs" t="Include" />
           </e>
           <e p="Piece.cs" t="Include" />
-          <e p="PieceModel.cs" t="Include" />
+          <e p="PieceModelEnum.cs" t="Include" />
           <e p="PieceMovement.cs" t="Include" />
           <e p="PiecePosition.cs" t="Include" />
           <e p="Pieces.cs" t="Include" />

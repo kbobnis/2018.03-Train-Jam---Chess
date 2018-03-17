@@ -15,10 +15,11 @@ public class Player {
 	}
 
 	public void AddToGraveyard(Piece piece) {
-		Vector3 whereToPutIt = new Vector3(-graveyard.Count, 0, -1);
+		Vector3 whereToPutIt = new Vector3(-graveyard.Count, 0, 8);
 		if (side == Side.Down) {
-			whereToPutIt.z = 8;
+			whereToPutIt.z = -1;
 		}
+		piece.ToggleSelect(false);
 		piece.gameObject.AddComponent<Mover3d>().MoveTo(piece.transform, whereToPutIt, () => {
 		}, Percent.One);
 		graveyard.Add(piece);
