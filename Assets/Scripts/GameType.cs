@@ -27,6 +27,7 @@ public class GameType {
 		switch (model) {
 			case PieceModel.Pawn: return new PieceMovement.Pawn();
 			case PieceModel.Knight: return new PieceMovement.Knight();
+			case PieceModel.King: return new PieceMovement.King();
 				default:
 			case PieceModel.Bishop: return new PieceMovement.Bishop();
 		}

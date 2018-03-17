@@ -72,4 +72,14 @@ public abstract class PieceMovement {
 			return CanMoveTo(pos, wheresFace, obstacles);
 		}
 	}
+
+	public class King : PieceMovement {
+		public override bool CanMoveTo(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
+			return Math.Abs(pos.x) <= 1 && Math.Abs(pos.y) <= 1;
+		}
+
+		public override bool CanAttack(Vector2Int pos, Side wheresFace, List<Vector2Int> obstacles) {
+			return CanMoveTo(pos, wheresFace, obstacles);
+		}
+	}
 }
