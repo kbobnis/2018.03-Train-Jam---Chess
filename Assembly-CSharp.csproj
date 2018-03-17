@@ -69,6 +69,8 @@
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\StartingPos.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />
+    <None Include="Assets\Necromancer GUI\Kingthings.txt" />
+    <None Include="Assets\Necromancer GUI\Readme.txt" />
     <None Include="Assets\Fonts\Roboto\LICENSE.txt" />
     <Reference Include="com.unity.postprocessing.Editor">
       <HintPath>C:/Users/Krzysiek/Documents/projects/trainJam2018/Library/ScriptAssemblies/com.unity.postprocessing.Editor.dll</HintPath>

@@ -8,12 +8,13 @@ public class Mover3d : MonoBehaviour {
 	private float progress;
 	private Action onFinish;
 	private Percent speed;
+	private float distance;
 
 	private void Update() {
 		if (this.end != Vector3.zero) {
-			float change = 0.1f / this.speed.value ;
+			float change = 0.1f / this.speed.value / distance ;
 			Vector3 delta = Vector3.Lerp(Vector3.zero, this.end - this.start, change);
-			this.moveWhat.position = this.moveWhat.position + (Vector3)delta;
+			this.moveWhat.position = this.moveWhat.position + delta;
 			this.progress += change;
 			if (this.progress >= 1) {
 				if (this.onFinish != null) {
@@ -30,5 +31,6 @@ public class Mover3d : MonoBehaviour {
 		this.moveWhat = moveWhat;
 		this.start = moveWhat.transform.position;
 		this.end = @where;
+		this.distance = (end - start).magnitude;
 	}
 }

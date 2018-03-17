@@ -12,6 +12,10 @@
             <e p="LICENSE.txt" t="Include" />
           </e>
         </e>
+        <e p="Necromancer GUI" t="Include">
+          <e p="Kingthings.txt" t="Include" />
+          <e p="Readme.txt" t="Include" />
+        </e>
         <e p="Plugins" t="Include">
           <e p="Editor" t="Include">
             <e p="JetBrains" t="Include">
