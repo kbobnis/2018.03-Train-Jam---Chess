@@ -136,35 +136,6 @@
             </e>
           </e>
         </e>
-        <e p="CinemachineExamples" t="Include">
-          <e p="Scenes" t="Include">
-            <e p="Scripting" t="Include">
-              <e p="ScriptingExample.cs" t="Include" />
-            </e>
-            <e p="Trigger volumes" t="Include">
-              <e p="GenericTrigger.cs" t="Include" />
-            </e>
-          </e>
-          <e p="Shared" t="Include">
-            <e p="Models" t="Include">
-              <e p="UnityCharacter" t="Include">
-                <e p="Scripts" t="Include">
-                  <e p="CharacterMovement.cs" t="Include" />
-                  <e p="CharacterMovement2D.cs" t="Include" />
-                </e>
-              </e>
-            </e>
-            <e p="Scripts" t="Include">
-              <e p="ActivateCamera.cs" t="Include" />
-              <e p="ActivateCameraWithDistance.cs" t="Include" />
-              <e p="ActivateCamOnPlay.cs" t="Include" />
-              <e p="ActivateObject.cs" t="Include" />
-              <e p="ActivateTimeline.cs" t="Include" />
-              <e p="ExampleHelpWindow.cs" t="Include" />
-              <e p="MixingCameraBlend.cs" t="Include" />
-            </e>
-          </e>
-        </e>
         <e p="Plugins" t="Include">
           <e p="Editor" t="Include">
             <e p="JetBrains" t="Include">

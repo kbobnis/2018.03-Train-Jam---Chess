@@ -2,7 +2,7 @@
 
 public class Rotator : MonoBehaviour {
 
-	[SerializeField] private float speed = 0.5f; 
+	[SerializeField] private float speed = 0.3f; 
 	[SerializeField] private Vector3 axis = new Vector3(0, 1, 0); 
 	
 	void Update() {
