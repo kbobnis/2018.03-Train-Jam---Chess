@@ -12,7 +12,7 @@ public class Mover3d : MonoBehaviour {
 
 	private void Update() {
 		if (this.end != Vector3.zero) {
-			float change = 0.1f / this.speed.value / distance ;
+			float change = this.speed.value / distance ;
 			Vector3 delta = Vector3.Lerp(Vector3.zero, this.end - this.start, change);
 			this.moveWhat.position = this.moveWhat.position + delta;
 			this.progress += change;

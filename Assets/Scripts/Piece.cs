@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class Piece : GameElement {
 	[SerializeField] private EnumToModel[] enumsToModels;
 	[SerializeField] private Material selected, isInDanger;
+	[SerializeField] private CinemachineVirtualCamera gameView, moveView;
+	
 
 	public event Action<Piece> OnSelected;
 	public event Action<Piece> OnFinishedMove;
@@ -29,7 +32,7 @@ public class Piece : GameElement {
 		pos = piecePos.pos;
 		this.movement = movement;
 		ToggleSelect(false);
-		GetComponent<Rotater>().enabled = false;
+		model.AddComponent<Rotator>().enabled = false;
 	}
 
 	private void SetType(PieceModelEnum modelEnum) {
@@ -64,17 +67,22 @@ public class Piece : GameElement {
 	}
 
 	public void MoveTo(Vector2Int pos, Action afterAction) {
+		moveView.LookAt = transform;
+		moveView.gameObject.SetActive(true);
+		
 		gameObject.AddComponent<Mover3d>().MoveTo(transform, new Vector3(-pos.x, 0, pos.y), () => {
+			moveView.gameObject.SetActive(false);
 			afterAction();
 			neverMoved = false;
 			if (OnFinishedMove != null) {
 				OnFinishedMove(this);
 			}
-		}, Percent.One);
+			
+		}, new Percent(0.03f));
 	}
 
 	public void ToggleSelectable(bool b) {
-		GetComponent<Rotater>().enabled = b;
+		model.GetComponent<Rotator>().enabled = b;
 	}
 
 	public bool CanMoveTo(Vector2Int tilePos, List<Vector2Int> obstacles) {

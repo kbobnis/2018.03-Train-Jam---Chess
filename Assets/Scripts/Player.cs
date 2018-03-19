@@ -21,7 +21,7 @@ public class Player {
 		}
 		piece.ToggleSelect(false);
 		piece.gameObject.AddComponent<Mover3d>().MoveTo(piece.transform, whereToPutIt, () => {
-		}, Percent.One);
+		}, new Percent(0.05f));
 		graveyard.Add(piece);
 	}
 }
